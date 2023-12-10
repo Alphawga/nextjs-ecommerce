@@ -1,6 +1,8 @@
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+"use client"
 import { IProduct } from '@/models/models';
 import Image from 'next/image';
+import EditProduct from "@/components/EditProduct";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 
 interface DataTableProps {
@@ -36,16 +38,17 @@ function DataTable({ products }: DataTableProps) {
               <td>{product.createdAt.toString()}</td>
               <td>{product.updatedAt.toString()}</td>
               <td>
-              <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn m-1"><DotsHorizontalIcon className="h-4 w-4" /></div>
-            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a><label htmlFor="my_modal_6" className="btn text-right">Add Building</label>
-              <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-              </a></li>
-              
-              <li><a>delete</a></li>
-            </ul>
-          </div>
+              <DropdownMenu.Root>
+  <DropdownMenu.Trigger> ....</DropdownMenu.Trigger>
+  <DropdownMenu.Portal>
+    <DropdownMenu.Content>
+      <DropdownMenu.Item><EditProduct  product={product}/></DropdownMenu.Item>
+      <DropdownMenu.Separator />
+      <DropdownMenu.Item>Delete</DropdownMenu.Item>
+      
+    </DropdownMenu.Content>
+  </DropdownMenu.Portal>
+</DropdownMenu.Root>
               </td>
             </tr>
           ))}

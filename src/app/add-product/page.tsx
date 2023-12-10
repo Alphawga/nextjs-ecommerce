@@ -37,7 +37,7 @@ async function addProduct(formData: FormData) {
     data: { name, description, imageUrl, price },
   });
 
-  redirect("/");
+
 }
 
 interface HomeProps {
