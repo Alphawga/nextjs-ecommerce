@@ -1,11 +1,21 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import { DataTable } from "./data-table";
+import { columns } from "./column";
+
 
 export const metadata = {
-  title: "Add Product - Flowmazon",
+  title: "Manage Product -Greenish Landmark",
 };
 
 async function addProduct(formData: FormData) {
@@ -33,16 +43,27 @@ async function addProduct(formData: FormData) {
   redirect("/");
 }
 
+
 export default async function AddProductPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
+  const products = await prisma.product.findMany({
+    orderBy: { id: "desc" },
+    
+  });
 
   return (
     <div>
-      <h1 className="mb-3 text-lg font-bold">Add Product</h1>
+      <Dialog>
+  <DialogTrigger> Add Building </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Add Building</DialogTitle>
+    </DialogHeader>
+    <div>
       <form action={addProduct}>
         <input
           required
@@ -70,8 +91,14 @@ export default async function AddProductPage() {
           type="number"
           className="input-bordered input mb-3 w-full"
         />
-        <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
+        <FormSubmitButton className="btn-block">Add Building</FormSubmitButton>
       </form>
+      </div>
+  </DialogContent>
+</Dialog>
+
+<DataTable data={products} columns={columns}/>
+
     </div>
   );
 }
