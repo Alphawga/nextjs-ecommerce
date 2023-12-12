@@ -52,6 +52,15 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
             <button onClick={() => signIn()}>Sign In</button>
           )}
         </li>
+        <li>
+          {user ? (
+            <button onClick={() => signOut({ callbackUrl: "/sign-in" })}>
+              Sign Out
+            </button>
+          ) : (
+            <button onClick={() => signIn()}>Sign In as Admin</button>
+          )}
+        </li>
       </ul>
     </div>
   );

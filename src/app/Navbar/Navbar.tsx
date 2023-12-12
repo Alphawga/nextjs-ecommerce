@@ -27,7 +27,7 @@ export default async function Navbar() {
       <div className="navbar m-auto max-w-7xl flex-col gap-2 sm:flex-row">
         <div className="flex-1">
           <Link href="/" className="btn-ghost btn text-xl normal-case">
-            <Image src={logo} height={40} width={40} alt="Flowmazon logo" />
+            <Image src={logo} height={40} width={40} alt="Greenwish Landmark logo" />
             Greenish Landmark
           </Link>
         </div>

@@ -25,7 +25,7 @@ export async function generateMetadata({
   const product = await getProduct(id);
 
   return {
-    title: product.name + " - Flowmazon",
+    title: product.name + " - Greenwish Landmark",
     description: product.description,
     openGraph: {
       images: [{ url: product.imageUrl }],

@@ -7,11 +7,11 @@ import * as Dialog from '@radix-ui/react-dialog';
 
 
 
-interface EditProductProps{
+interface EditDeleteProductProps {
     product: IProduct
 }
 
-export default function EditProduct({product}: EditProductProps) {
+export default function DeleteProduct({product}: EditDeleteProductProps) {
 
 
     

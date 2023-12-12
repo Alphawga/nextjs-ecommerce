@@ -7,6 +7,8 @@ import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient) as Adapter,
@@ -15,7 +17,38 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
+      },
+      async authorize (credentials) {
+        const user = await prisma.user.findUnique({ where: { email: credentials?.email } });
+
+        console.log({ user });
+
+        if (!user || !user.password) {
+          return null; 
+        }
+
+        const password = credentials?.password;
+
+        if (!password) {
+          return null;
+        }
+
+      if(password === user.password) {
+        return user;
+      }
+
+        return null;
+      },
+    }),
   ],
+  pages: {
+    signIn: "/sign-in",
+  },
   callbacks: {
     session({ session, user }) {
       session.user.id = user.id;
@@ -27,6 +60,7 @@ export const authOptions: NextAuthOptions = {
       await mergeAnonymousCartIntoUserCart(user.id);
     },
   },
+
 };
 
 const handler = NextAuth(authOptions);

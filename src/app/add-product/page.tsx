@@ -21,7 +21,7 @@ async function addProduct(formData: FormData) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/add-product");
+    redirect("/sign-in");
   }
 
   const name = formData.get("name")?.toString();
